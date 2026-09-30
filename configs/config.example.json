@@ -1,0 +1,50 @@
+{
+  "listen_addr": ":8080",
+  "default_timeout": "5s",
+  "max_batch_size": 100,
+  "max_concurrent": 64,
+  "requests_per_second": 0,
+  "providers": [
+    {
+      "name": "primary",
+      "url": "https://node1.example.com/",
+      "weight": 1,
+      "timeout": "3s",
+      "healthy": true,
+      "methods": []
+    },
+    {
+      "name": "secondary",
+      "url": "https://node2.example.com/",
+      "weight": 1,
+      "timeout": "3s",
+      "healthy": true,
+      "methods": []
+    },
+    {
+      "name": "archive-only",
+      "url": "https://archive.example.com/",
+      "timeout": "6s",
+      "healthy": true,
+      "methods": ["eth_getBalance", "eth_getTransactionReceipt", "eth_getBlockByNumber"]
+    }
+  ],
+  "idempotent_methods": [
+    "eth_getBalance", "eth_getTransactionByHash", "eth_getTransactionReceipt",
+    "eth_blockNumber", "eth_getBlockByNumber", "eth_getBlockByHash",
+    "eth_getCode", "eth_call", "eth_estimateGas", "eth_chainId",
+    "eth_getTransactionCount", "eth_gasPrice", "net_version", "web3_clientVersion"
+  ],
+  "non_retryable_methods": [
+    "eth_sendRawTransaction", "eth_sendTransaction",
+    "personal_sendTransaction", "eth_sign", "personal_sign"
+  ],
+  "cache": {
+    "enabled": true,
+    "ttl": "2s",
+    "methods": [
+      "eth_getBalance", "eth_blockNumber", "eth_getCode",
+      "eth_chainId", "net_version", "web3_clientVersion"
+    ]
+  }
+}

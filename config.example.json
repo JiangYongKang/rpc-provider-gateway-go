@@ -1,0 +1,28 @@
+{
+  "listen_addr": "127.0.0.1:8080",
+  "path": "/",
+  "default_timeout": "2s",
+  "max_concurrent": 100,
+  "qps": 50,
+  "providers": [
+    {
+      "name": "primary",
+      "url": "http://127.0.0.1:19101",
+      "timeout": "1s",
+      "health_cooldown": "2s"
+    },
+    {
+      "name": "backup",
+      "url": "http://127.0.0.1:19102",
+      "timeout": "1s",
+      "health_cooldown": "2s"
+    }
+  ],
+  "methods": {
+    "eth_chainId":      { "read_only": true },
+    "eth_blockNumber":  { "read_only": true, "cacheable": true, "ttl": "1s" },
+    "eth_getBalance":   { "read_only": true },
+    "eth_call":         { "read_only": true },
+    "eth_sendRawTransaction": {}
+  }
+}
